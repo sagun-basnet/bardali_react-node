@@ -5,8 +5,13 @@ import Button from './components/Button'
 import FormComponent from './components/form/FormComponent';
 import Navbar from './components/global/Navbar';
 import Register from './components/form/Register';
+// import { Routes, Route } from 'react-router-dom'
+import { createBrowserRouter, Link, Outlet, RouterProvider } from 'react-router-dom'
 // import Navbar from './components/global/Navbar'
-// import Home from './pages/Home'
+import Home from './pages/Home'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Service from './pages/Service'
 // import mySvg from './assets/image/react.svg'
 // import Card from './components/Card'
 // import Form from './components/form/Form'
@@ -14,39 +19,70 @@ import Register from './components/form/Register';
 
 function App() {
 
-  const myClass = 'bg-blue-500';
-
-  const [value, setValue] = useState(0);
-
-
-  const add = () => {
-    setValue(value + 1);
-    // console.log(value);
-  }
-  const myFun = () => {
-
+  const Layout = () => {
+    return (
+      <>
+        <Navbar />
+        <Outlet />
+        {/* <Footer/> */}
+      </>
+    )
   }
 
-  useEffect(() => {
-    // console.log("I am useEffect");
-    myFun();
-  }, []);
+  const route = createBrowserRouter(
+    [
+      {
+        path: '/',
+        element: <Layout />,
+        children: [
+          {
+            path: '/',
+            element: <Home />,
+
+          },
+          {
+            path: '/about',
+            element: <About />,
+
+          },
+          {
+            path: '/contact',
+            element: <Contact />,
+
+          },
+          {
+            path: '/service',
+            element: <Service />,
+
+          },
+
+
+        ]
+      },
+      {
+        path: '/register',
+        element: <Register />,
+      },
+      {
+        path: '*',
+        element: < >
+          <Link to='/'>Go to home</Link>
+        </>,
+      },
+    ]
+  )
 
   return (
     <>
-      <Register />
-      {/* <Navbar /> */}
-      {/* <Navbar title="This is navbar" />
-      <Home />
-      <Card path={mySvg} />
-      <Form placeholder="Enter name" />*/}
-      {/* <Button text="Go to About" bgColor="bg-blue-500" /> */}
-      {/* <button className={`p-2 px-4 ${myClass}`} onClick={add}>Add</button> */}
-      {/* <br /> */}
-      {/* <span>value = {value}</span> */}
-
-      {/* <FormComponent title="Login" type="login" btnText="Login" />
-      <FormComponent title="Register" type="register" btnText="Sign up" /> */}
+      <RouterProvider router={route} />
+      {/* <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/service' element={<Service />} />
+        <Route path='/register' element={<Register />} />
+      </Routes> */}
     </>
   )
 }
