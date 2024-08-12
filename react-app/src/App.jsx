@@ -12,6 +12,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Service from './pages/Service'
+import Sidebar from './components/global/Sidebar';
 // import mySvg from './assets/image/react.svg'
 // import Card from './components/Card'
 // import Form from './components/form/Form'
@@ -23,6 +24,15 @@ function App() {
     return (
       <>
         <Navbar />
+        <Outlet />
+        {/* <Footer/> */}
+      </>
+    )
+  }
+  const Layout1 = () => {
+    return (
+      <>
+        <Sidebar />
         <Outlet />
         {/* <Footer/> */}
       </>
@@ -62,6 +72,16 @@ function App() {
       {
         path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/admin',
+        element: <Layout1 />,
+        children: [
+          {
+            path: '/admin/dashboard',
+            element: <Home />
+          }
+        ]
       },
       {
         path: '*',
